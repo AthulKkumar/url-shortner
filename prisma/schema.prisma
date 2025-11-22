@@ -1,0 +1,26 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Link {
+  id          String    @id @default(cuid()) // Unique identifier
+  code        String    @unique              // Short code (e.g., "abc123")
+  targetUrl   String                         // Original long URL
+  clicks      Int       @default(0)          // Total click count
+  lastClicked DateTime?                      // Last time someone clicked
+  createdAt   DateTime  @default(now())      // When link was created
+  updatedAt   DateTime  @updatedAt           // Auto-updates on changes
+
+  @@index([code]) // Index for fast lookups by code
+}
