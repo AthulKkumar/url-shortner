@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import prisma from '../../lib/prisma'
 
+// ADD THIS LINE - Forces runtime rendering, not build-time
+export const dynamic = 'force-dynamic'
+
 // GET /:code - Redirect to original URL
 export async function GET(request, { params }) {
     try {
@@ -18,14 +21,12 @@ export async function GET(request, { params }) {
             where: { code },
         })
 
-
         if (!link) {
             return NextResponse.json(
                 { error: 'Link not found' },
                 { status: 404 }
             )
         }
-
 
         await prisma.link.update({
             where: { code },
@@ -34,7 +35,6 @@ export async function GET(request, { params }) {
                 lastClicked: new Date(),
             },
         })
-
 
         return NextResponse.redirect(link.targetUrl, 302)
     } catch (error) {

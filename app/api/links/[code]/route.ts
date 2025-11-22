@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '../../../../lib/prisma'
 
+// ADD THIS LINE - Forces runtime rendering, not build-time
+export const dynamic = 'force-dynamic'
+
 // GET /api/links/:code - Get stats for a single link
 export async function GET(request: NextRequest, { params }: { params: any }) {
   try {
@@ -48,7 +51,6 @@ export async function DELETE(request: NextRequest, { params }: { params: any }) 
         { status: 404 }
       )
     }
-
 
     await prisma.link.delete({ where: { code } })
 
