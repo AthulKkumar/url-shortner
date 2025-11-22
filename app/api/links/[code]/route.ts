@@ -1,13 +1,10 @@
-
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '../../../../lib/prisma'
 
-type Params = { params: Promise<{ code: string }> }
-
 // GET /api/links/:code - Get stats for a single link
-export async function GET(request: NextRequest, { params }: Params) {
+export async function GET(request: NextRequest, { params }: { params: any }) {
   try {
-    const { code } = await params
+    const { code } = params
 
     const link = await prisma.link.findUnique({
       where: { code },
@@ -40,9 +37,9 @@ export async function GET(request: NextRequest, { params }: Params) {
 }
 
 // DELETE /api/links/:code - Delete a link
-export async function DELETE(request: NextRequest, { params }: Params) {
+export async function DELETE(request: NextRequest, { params }: { params: any }) {
   try {
-    const { code } = await params
+    const { code } = params
 
     const existing = await prisma.link.findUnique({ where: { code } })
     if (!existing) {

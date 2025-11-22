@@ -1,11 +1,10 @@
-
 import { NextResponse } from 'next/server'
 import prisma from '../../lib/prisma'
 
 // GET /:code - Redirect to original URL
 export async function GET(request, { params }) {
     try {
-        const { code } = await params
+        const { code } = params
 
         // Validate code format (6-8 alphanumeric)
         if (!/^[A-Za-z0-9]{6,8}$/.test(code)) {
