@@ -1,5 +1,3 @@
-// Redirect Route Handler for /:code
-// This handles the actual URL shortening redirect
 
 import { NextResponse } from 'next/server'
 import prisma from '../../lib/prisma'
